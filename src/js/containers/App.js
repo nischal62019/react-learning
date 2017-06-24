@@ -10,9 +10,7 @@ import configureStore from '../store'
 import Header from '../components/Header'
 import TodoItem from '../components/TodoItem'
 import TodoInput from '../components/TodoInput'
-import NewTodos from '../components/NewTodos'
-import CompletedTodos from '../components/CompletedTodos'
-import AllTodos from '../components/AllTodos'
+import ListTodos from '../components/ListTodos'
 import TodoList from '../components/TodoList'
 
 // import actions
@@ -46,6 +44,10 @@ export default class App extends React.Component {
         }
         
     }
+
+    handleTodoSelected(e) {
+        TodoActions.toggleTodo(e.target.id)
+    }
     
 
     render() {
@@ -54,13 +56,7 @@ export default class App extends React.Component {
                 <div>
                     <Header/>
                     <TodoInput inputValue={this.state.inputInitValue} onclick={this.handleClick.bind(this)} onkeypress={this.handleKeyPress.bind(this)}/>
-                    <div>
-                        <TodoList todos={this.state.todos}/>
-                    </div>
-                    <Route path="/"/>                    
-                    <Route path="/new" component={NewTodos}/>
-                    <Route path="/completed" component={CompletedTodos}/>
-                    <Route path="/all" component={AllTodos}/>                    
+                    <Route path="/:id?" render={props => <ListTodos onTodoChange={this.handleTodoSelected.bind(this)} todos={this.state.todos} {...props} />} />                    
                 </div>
             </Router>
         )

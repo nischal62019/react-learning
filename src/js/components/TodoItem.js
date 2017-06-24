@@ -9,7 +9,7 @@ export default class TodoItem extends React.Component {
         }
         return (
             <div>
-                    <input type="checkbox" /><span style={itemStyle}>{this.props.text}</span> <br/>
+                    <input type="checkbox" defaultChecked={this.props.completed} id={this.props.id} onChange={this.props.onTodoChange}/><span style={itemStyle}>{this.props.text}</span> <br/>
             </div>
         )
     }
