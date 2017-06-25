@@ -1,10 +1,11 @@
 import EventEmitter from 'events'
 import dispatcher from './dispatcher'
+import * as TodoListConstants from './containers/TodoList/constants'
+import * as TodoInputConstants from './containers/TodoInput/constants'
 
 class Store extends EventEmitter {
   constructor() {
     super()
-    this.inputInitValue=""
     this.todos = [
       {
         id: 1,
@@ -25,15 +26,14 @@ class Store extends EventEmitter {
   }
 
   handleActions(action) {
-    console.log('action received ', action)
     switch (action.type) {
-      case "CREATE":
+      case TodoInputConstants.CREATE:
         this.createTodo(action.text)
         break;
-      case "DELETE":
+      case TodoListConstants.DELETE:
         this.deleteTodo(action.id)
         break;
-      case "TOGGLE":
+      case TodoListConstants.TOGGLE:
         this.toggleTodo(action.id)
         break;
       default:
@@ -48,7 +48,6 @@ class Store extends EventEmitter {
       text,
       completed: false
     })
-    this.inputInitValue = ""
     this.emit("change")
   }
 
