@@ -1,16 +1,17 @@
-import dispatcher from '../../dispatcher'
-import {TOGGLE, DELETE} from './constants'
+import { TOGGLE, DELETE } from './constants'
 
 export function toggleTodo(id) {
-    dispatcher.dispatch({
-        type: TOGGLE,
-        id
-    })
+    return (dispatch) => {
+        dispatch({
+            type: TOGGLE,
+            payload: id
+        })
+    }
 }
 
 export function deleteTodo(id) {
     dispatcher.dispatch({
         type: DELETE,
-        id
+        payload: id
     })
 }

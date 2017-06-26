@@ -1,9 +1,11 @@
-import dispatcher from '../../dispatcher'
-import {CREATE} from './constants.js'
+import { CREATE } from './constants.js'
 
 export function createTodo(text) {
-    dispatcher.dispatch({
+    return {
         type: CREATE,
-        text
-    })
+        payload: {
+            text,
+            id: Date.now()
+        }
+    }
 }

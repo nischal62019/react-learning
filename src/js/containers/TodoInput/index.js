@@ -1,7 +1,13 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import TodoInput from '../../components/TodoInput'
 import * as Actions from './actions'
 
+@connect((store) => {
+    return {
+        todoInput: store.todoInput
+    }
+})
 export default class TodoInputContainer extends React.Component {
 
     constructor(props) {
@@ -17,7 +23,8 @@ export default class TodoInputContainer extends React.Component {
     handleClick(e) {
         if (this.todoStr && this.todoStr.length > 0) {
             this.setState({inputInitValue: ''})
-            Actions.createTodo(this.todoStr)
+            console.log('create todo action ', Actions.createTodo(this.todoStr))
+            this.props.dispatch(Actions.createTodo(this.todoStr))
         }
     }
 
