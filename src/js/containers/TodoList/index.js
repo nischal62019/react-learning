@@ -1,37 +1,57 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import TodoList from '../../components/TodoList'
-import * as Actions from './actions'
+import { fetchTodos, toggleTodo } from './actions'
 
-@connect((store) => {
-    return {
-        todos: store.todos
+class TodoListContainer extends React.Component {
+
+    componentWillMount() {
+        this.props.fetchTodos()
     }
-})
-export default class TodoListContainer extends React.Component {
-
-    handleTodoSelected(e) {
-        console.log(e.target.id)
-        this.props.dispatch(Actions.toggleTodo(e.target.id))
+    handleToggleTodo = (e) => {
+        this.props.toggleTodo(e.target.id)
     }
-
     render() {
-        const filter = this.props.match.params.id
-        var todos = this.props.todos
-        console.log('List of todos',todos)
-        todos = todos.filter((todo) => {
-            if (filter == 'new') {
-                return !todo.completed
-            } else if (filter == 'completed') {
-                return todo.completed
-            } else {
-                return true
-            }
-        })
         return (
-            <div>
-                <TodoList filter={this.props.match.params.id} onTodoChange={this.handleTodoSelected.bind(this)} todos={todos} />
-            </div>
+            <TodoList toggleTodo={this.handleToggleTodo.bind(this)} todos={this.props.todos}/>
         )
     }
+
 }
+
+const filterTodoList = (todos, filter) => {
+    return todos.filter((todo) => {
+        if (filter == 'new') {
+            return !todo.completed
+        } else if (filter == 'completed') {
+            return todo.completed
+        } else {
+            return true
+        }
+    })
+}
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        todos: filterTodoList(state.todos, ownProps.match.params.id),
+    }
+}
+// This is another alternative of injecting dispatch to props
+
+// const mapDispatchToProps = (dispatch, ownProps) => {
+//     return {
+//         toggleTodo: (e) => {
+//             dispatch(toggleTodo(e.target.id))
+//         },
+//         fetchTodos: () => {
+//             dispatch(fetchTodos())
+//         }
+//     }
+// }
+
+export default connect(
+    mapStateToProps, {
+        toggleTodo,
+        fetchTodos
+    }
+)(TodoListContainer)

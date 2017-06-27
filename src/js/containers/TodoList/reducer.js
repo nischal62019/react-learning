@@ -1,26 +1,8 @@
 import { List } from 'immutable'
-import {  DELETE, TOGGLE } from './constants'
+import { DELETE, TOGGLE, FETCH } from './constants'
 import { CREATE } from '../TodoInput/constants'
 
-const todos = [
-    {
-        id: 1,
-        text: 'Buy milk',
-        completed: false
-    },
-    {
-        id: 2,
-        text: 'Buy bread',
-        completed: false
-    },
-    {
-        id: 3,
-        text: 'Buy jam',
-        completed: false
-    }
-]
-
-const initState = List(todos)
+const initState = List([])
 
 export const TodoListReducer = (state = initState, action) => {
     switch (action.type) {
@@ -39,6 +21,9 @@ export const TodoListReducer = (state = initState, action) => {
                 }
                 return todo
             })
+            break;
+        case FETCH:
+            state = List(action.payload)
             break;
         default:
             break;
