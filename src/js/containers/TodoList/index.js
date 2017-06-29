@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import TodoList from '../../components/TodoList'
 import { fetchTodos, toggleTodo } from './actions'
+import { todoListSelector } from './selector'
 
 class TodoListContainer extends React.Component {
 
@@ -33,7 +34,7 @@ const filterTodoList = (todos, filter) => {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        todos: filterTodoList(state.todos, ownProps.match.params.id),
+        todos: todoListSelector(state, ownProps)
     }
 }
 // This is another alternative of injecting dispatch to props

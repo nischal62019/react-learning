@@ -1,4 +1,4 @@
-import { CREATE, UPDATE_INPUT } from './constants.js'
+import { CREATE } from './constants.js'
 
 export function createTodo(text) {
     return {
@@ -7,12 +7,5 @@ export function createTodo(text) {
             text,
             id: Date.now()
         }
-    }
-}
-
-export function updateInputText(text) {
-    return {
-        type: UPDATE_INPUT,
-        payload: text
     }
 }

@@ -1,4 +1,4 @@
-import { UPDATE_INPUT, CREATE } from './constants'
+import { CREATE } from './constants'
 
 export const TodoInputReducer = (state = { inputText: '' }, action) => {
     switch (action.type) {
