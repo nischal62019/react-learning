@@ -6,15 +6,22 @@ import { todoListSelector } from './selector'
 
 class TodoListContainer extends React.Component {
 
+    constructor() {
+        super()
+        this.toggleTodo = this.handleToggleTodo.bind(this)
+    }
+
     componentWillMount() {
         this.props.fetchTodos()
     }
     handleToggleTodo = (e) => {
-        this.props.toggleTodo(e.target.id)
+        const toggleTodo = this.props.todos.filter( todo => todo.id == e.target.id )
+        toggleTodo[0].completed = !toggleTodo[0].completed
+        this.props.toggleTodo(toggleTodo)
     }
     render() {
         return (
-            <TodoList toggleTodo={this.handleToggleTodo.bind(this)} todos={this.props.todos}/>
+            <TodoList toggleTodo={this.toggleTodo} todos={this.props.todos}/>
         )
     }
 
@@ -37,18 +44,6 @@ const mapStateToProps = (state, ownProps) => {
         todos: todoListSelector(state, ownProps)
     }
 }
-// This is another alternative of injecting dispatch to props
-
-// const mapDispatchToProps = (dispatch, ownProps) => {
-//     return {
-//         toggleTodo: (e) => {
-//             dispatch(toggleTodo(e.target.id))
-//         },
-//         fetchTodos: () => {
-//             dispatch(fetchTodos())
-//         }
-//     }
-// }
 
 export default connect(
     mapStateToProps, {

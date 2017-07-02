@@ -8,14 +8,6 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch, ownProps) => {
-//     return {
-//         handleCreateTodo: (todoText) => {
-//             dispatch( Actions.createTodo( todoText ) )
-//         }
-//     }
-// }
-
 const TodoInputContainer = connect(
     mapStateToProps, {
         createTodo

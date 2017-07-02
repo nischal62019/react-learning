@@ -1,10 +1,11 @@
 import { TOGGLE, DELETE, FETCH } from './constants'
+import normalizeTodos from '../../todoNormalizer'
 
-export function toggleTodo(id) {
+export function toggleTodo(todo) {
     return (dispatch) => {
         dispatch({
             type: TOGGLE,
-            payload: id
+            payload: normalizeTodos(todo)
         })
     }
 }
@@ -40,7 +41,7 @@ export function fetchTodos() {
     return (dispatch) => {
         dispatch({
             type: FETCH,
-            payload: todos
+            payload: normalizeTodos(todos)
         })
     }
 }
